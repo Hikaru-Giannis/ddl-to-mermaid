@@ -1,13 +1,17 @@
 mod sql_to_mermaid;
+use std::fs;
+use std::error::Error;
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
 
-    // TODO 文字列を直書き
-    let input = "CREATE TABLE users (id INT, name TEXT, age INT)";
+    // ファイルを読み込む
+    let input = fs::read_to_string("input.sql")?;
 
     // 入力を解析し、mermaidのコードを生成
-    let output = sql_to_mermaid::convert(input);
+    let output = sql_to_mermaid::convert(&input);
 
     // 出力
     println!("{}", output);
+
+    Ok(())
 }
